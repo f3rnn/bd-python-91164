@@ -16,90 +16,110 @@ class Aluno(Base):
     __tablename__ = "alunos"
 
     # definindo campos da tabela
-    id = Column("id", Integer, primary_key=True, autoincrement=True)
+    ra = Column("ra", Integer, primary_key=True, autoincrement=True)
     nome = Column("nome", String)
+    sobrenome = Column("sobrenome", String)
     email = Column("email", String)
     senha = Column("senha", String)
 
     # definindo atributos da classe
-    def __init__(self, nome: str, email: str, senha: str):
+    def __init__(self, nome: str, sobrenome: str, email: str, senha: str):
         self.nome = nome
+        self.sobrenome = sobrenome
         self.email = email
         self.senha = senha
 
 # criando tabela no banco de dados
 Base.metadata.create_all(bind=MEU_BANCO)
 
-# CRUD.
-# c - create - insert - salvar
 os.system("cls || clear")
-print("solicitando dados para o cliente.")
-inserir_nome = input("digite seu nome: ")
-inserir_email = input("digite seu e-mail: ")
-inserir_senha = input("digite sua senha: ")
+while True:
+    print("código \t descrição")
+    print("c \t adicionar aluno")
+    print("r \t consultar aluno")
+    print("u \t atualizar aluno")
+    print("d \t deletar aluno")
+    resposta = input("informe o código desejado: \n")
+    resposta.upper
+    
+    match(resposta):
+        case 'C':
+            consultar()
 
-cliente = Cliente(nome=inserir_nome, email=inserir_email, senha=inserir_senha)
-session.add(cliente)
-session.commit()
+    if resposta != "N":
+        print("solicitando dados para o cliente.")
+        inserir_nome = input("digite seu nome: ")
+        inserir_sobrenome = input("digite seu sobrenome: ")
+        inserir_email = input("digite seu e-mail: ")
+        inserir_senha = input("digite sua senha: ")
 
-# r - read - select - consultar
-print("\nexibindo dados de todos os clientes.")
-lista_clientes = session.query(Cliente).all()
+        aluno = Aluno(nome=inserir_nome, sobrenome=inserir_sobrenome, email=inserir_email, senha=inserir_senha)
+        session.add(aluno)
+        session.commit()
+    
+    else:
+        break
 
-for cliente in lista_clientes:
-    print(f"{cliente.id} - {cliente.nome} - {cliente.email} - {cliente.senha}")
+def criar():
+    print("solicitando dados para o aluno.")
+    inserir_nome = input("digite seu nome: ")
+    inserir_sobrenome = input("digite seu sobrenome: ")
+    inserir_email = input("digite seu e-mail: ")
+    inserir_senha = input("digite sua senha: ")
+
+    aluno = Aluno(nome=inserir_nome, sobrenome=inserir_sobrenome, email=inserir_email, senha=inserir_senha)
+    session.add(aluno)
+    session.commit()
+
+
+def consultar():
+    print("\nexibindo dados de todos os clientes.")
+    lista_alunos = session.query(Aluno).all()
+
+    for aluno in lista_alunos:
+        print(f"{aluno.id} - {aluno.nome} - {aluno.sobrenome} - {aluno.email} - {aluno.senha}")
 
 # u - update - update - atualizar
-print("\natualizando dados do usuário")
-email_cliente = input("digite o e-mail do cliente que será atualizado: ")
+def atualizar():
+    print("\natualizando dados do usuário")
+    email_aluno = input("digite o e-mail do aluno que será atualizado: ")
 
-cliente = session.query(Cliente).filter_by(email = email_cliente).first()
+    aluno = session.query(Aluno).filter_by(email = email_aluno).first()
 
-if cliente:
-    cliente.nome = input("digite seu nome: ")
-    cliente.email = input("digite seu e-mail: ")
-    cliente.senha = input("digite sua senha: ")
+    if aluno:
+        aluno.nome = input("digite seu nome: ")
+        aluno.sobrenome = input("digite seu sobrenome: ")
+        aluno.email = input("digite seu e-mail: ")
+        aluno.senha = input("digite sua senha: ")
 
-    session.commit()
-else:
-    print("cliente não encontrado")
-
-# r - read - select - consultar
-print("\nexibindo dados de todos os clientes.")
-lista_clientes = session.query(Cliente).all()
-
-for cliente in lista_clientes:
-    print(f"{cliente.id} - {cliente.nome} - {cliente.email} - {cliente.senha}")
+        session.commit()
+    else:
+        print("cliente não encontrado")
 
 # d - delete - delete - excluir
-print("\nexcluindo um cliente")
-email_cliente = input("digite o e-mail do cliente que será excluído: ")
+def excluir():
+    print("\nexcluindo um aluno")
+    email_aluno = input("digite o e-mail do aluno que será excluído: ")
 
-cliente = session.query(Cliente).filter_by(email = email_cliente).first()
+    aluno = session.query(Aluno).filter_by(email = email_aluno).first()
 
-if cliente:
-    session.delete(cliente)
-    session.commit()
-else:
-    print("cliente não encontrado")
-
-# r - read - select - consultar
-print("\nexibindo dados de todos os clientes.")
-lista_clientes = session.query(Cliente).all()
-
-for cliente in lista_clientes:
-    print(f"{cliente.id} - {cliente.nome} - {cliente.email} - {cliente.senha}")
+    if aluno:
+        session.delete(aluno)
+        session.commit()
+    else:
+        print("aluno não encontrado")
 
 # r - read - select - consulta
-print("pesquisando os dados de apenas um cliente")
-email_cliente = input("digite o e-mail do cliente: ")
+def consultaUnica():
+    print("pesquisando os dados de apenas um aluno")
+    email_aluno = input("digite o e-mail do aluno: ")
 
-cliente = session.query(Cliente).filter_by(email = email_cliente).first()
+    aluno = session.query(Aluno).filter_by(email = email_aluno).first()
 
-if cliente:
-    print(f"{cliente.id} - {cliente.nome} - {cliente.email} - {cliente.senha}")
-else:
-    print("cliente não encontrado")
+    if aluno:
+        print(f"{aluno.id} - {aluno.nome} - {aluno.sobrenome} - {aluno.email} - {aluno.senha}")
+    else:
+        print("aluno não encontrado")
 
 # fechando conexão
 session.close()
