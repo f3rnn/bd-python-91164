@@ -66,29 +66,6 @@ def atualizar():
     else:
         print("cliente não encontrado")
 
-os.system("cls || clear")
-
-while True:
-    print("código \t descrição")
-    print("1 \t adicionar aluno")
-    print("2 \t consultar aluno")
-    print("3 \t atualizar aluno")
-    print("4 \t deletar aluno")
-    resposta = int(input("informe o código desejado: \n"))
-    
-    match(resposta):
-        case 1:
-            criar()
-        case 'R':
-            consultar()
-
-
-
-
-# u - update - update - atualizar
-
-
-# d - delete - delete - excluir
 def excluir():
     print("\nexcluindo um aluno")
     email_aluno = input("digite o e-mail do aluno que será excluído: ")
@@ -100,6 +77,33 @@ def excluir():
         session.commit()
     else:
         print("aluno não encontrado")
+
+os.system("cls || clear")
+
+while True:
+    print("código \t descrição")
+    print("1 \t adicionar aluno")
+    print("2 \t consultar aluno")
+    print("3 \t atualizar aluno")
+    print("4 \t deletar aluno")
+    print("5 \t consultar um aluno")
+    print("6 \t exibir lista completa e sair")
+    resposta = int(input("informe o código desejado: \n"))
+    
+    match(resposta):
+        case 1:
+            criar()
+        case 2:
+            consultar()
+        case 3:
+            consultar()
+            atualizar()
+        case 4:
+            consultar()
+            excluir()
+        case 5:
+            
+
 
 # r - read - select - consulta
 def consultaUnica():
