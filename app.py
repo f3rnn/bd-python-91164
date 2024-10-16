@@ -32,7 +32,19 @@ class Aluno(Base):
 # criando tabela no banco de dados
 Base.metadata.create_all(bind=MEU_BANCO)
 
+def criar():
+    print("solicitando dados para o aluno.")
+    inserir_nome = input("digite seu nome: ")
+    inserir_sobrenome = input("digite seu sobrenome: ")
+    inserir_email = input("digite seu e-mail: ")
+    inserir_senha = input("digite sua senha: ")
+
+    aluno = Aluno(nome=inserir_nome, sobrenome=inserir_sobrenome, email=inserir_email, senha=inserir_senha)
+    session.add(aluno)
+    session.commit()
+
 os.system("cls || clear")
+
 while True:
     print("código \t descrição")
     print("c \t adicionar aluno")
@@ -44,7 +56,7 @@ while True:
     
     match(resposta):
         case 'C':
-            consultar()
+            criar()
 
     if resposta != "N":
         print("solicitando dados para o cliente.")
@@ -59,17 +71,6 @@ while True:
     
     else:
         break
-
-def criar():
-    print("solicitando dados para o aluno.")
-    inserir_nome = input("digite seu nome: ")
-    inserir_sobrenome = input("digite seu sobrenome: ")
-    inserir_email = input("digite seu e-mail: ")
-    inserir_senha = input("digite sua senha: ")
-
-    aluno = Aluno(nome=inserir_nome, sobrenome=inserir_sobrenome, email=inserir_email, senha=inserir_senha)
-    session.add(aluno)
-    session.commit()
 
 
 def consultar():
