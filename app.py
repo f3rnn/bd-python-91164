@@ -43,42 +43,31 @@ def criar():
     session.add(aluno)
     session.commit()
 
-os.system("cls || clear")
-
-while True:
-    print("código \t descrição")
-    print("c \t adicionar aluno")
-    print("r \t consultar aluno")
-    print("u \t atualizar aluno")
-    print("d \t deletar aluno")
-    resposta = input("informe o código desejado: \n")
-    resposta.upper
-    
-    match(resposta):
-        case 'C':
-            criar()
-
-    if resposta != "N":
-        print("solicitando dados para o cliente.")
-        inserir_nome = input("digite seu nome: ")
-        inserir_sobrenome = input("digite seu sobrenome: ")
-        inserir_email = input("digite seu e-mail: ")
-        inserir_senha = input("digite sua senha: ")
-
-        aluno = Aluno(nome=inserir_nome, sobrenome=inserir_sobrenome, email=inserir_email, senha=inserir_senha)
-        session.add(aluno)
-        session.commit()
-    
-    else:
-        break
-
-
 def consultar():
     print("\nexibindo dados de todos os clientes.")
     lista_alunos = session.query(Aluno).all()
 
     for aluno in lista_alunos:
-        print(f"{aluno.id} - {aluno.nome} - {aluno.sobrenome} - {aluno.email} - {aluno.senha}")
+        print(f"{aluno.ra} - {aluno.nome} - {aluno.sobrenome} - {aluno.email} - {aluno.senha}")
+
+os.system("cls || clear")
+
+while True:
+    print("código \t descrição")
+    print("1 \t adicionar aluno")
+    print("2 \t consultar aluno")
+    print("3 \t atualizar aluno")
+    print("4 \t deletar aluno")
+    resposta = int(input("informe o código desejado: \n"))
+    
+    match(resposta):
+        case 1:
+            criar()
+        case 'R':
+            consultar()
+
+
+
 
 # u - update - update - atualizar
 def atualizar():
