@@ -78,7 +78,16 @@ def excluir():
     else:
         print("aluno não encontrado")
 
-os.system("cls || clear")
+def consultaUnica():
+    print("pesquisando os dados de apenas um aluno")
+    email_aluno = input("digite o e-mail do aluno: ")
+
+    aluno = session.query(Aluno).filter_by(email = email_aluno).first()
+
+    if aluno:
+        print(f"{aluno.id} - {aluno.nome} - {aluno.sobrenome} - {aluno.email} - {aluno.senha}")
+    else:
+        print("aluno não encontrado")
 
 while True:
     print("código \t descrição")
@@ -88,7 +97,9 @@ while True:
     print("4 \t deletar aluno")
     print("5 \t consultar um aluno")
     print("6 \t exibir lista completa e sair")
+    
     resposta = int(input("informe o código desejado: \n"))
+    os.system("cls || clear")
     
     match(resposta):
         case 1:
@@ -102,20 +113,12 @@ while True:
             consultar()
             excluir()
         case 5:
-            
-
-
-# r - read - select - consulta
-def consultaUnica():
-    print("pesquisando os dados de apenas um aluno")
-    email_aluno = input("digite o e-mail do aluno: ")
-
-    aluno = session.query(Aluno).filter_by(email = email_aluno).first()
-
-    if aluno:
-        print(f"{aluno.id} - {aluno.nome} - {aluno.sobrenome} - {aluno.email} - {aluno.senha}")
-    else:
-        print("aluno não encontrado")
+            consultaUnica()
+        case 6:
+            consultar()
+            break
+        case _:
+            print("código inválido, tente novamente")
 
 # fechando conexão
 session.close()
