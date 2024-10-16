@@ -50,6 +50,22 @@ def consultar():
     for aluno in lista_alunos:
         print(f"{aluno.ra} - {aluno.nome} - {aluno.sobrenome} - {aluno.email} - {aluno.senha}")
 
+def atualizar():
+    print("\natualizando dados do usuário")
+    email_aluno = input("digite o e-mail do aluno que será atualizado: ")
+
+    aluno = session.query(Aluno).filter_by(email = email_aluno).first()
+
+    if aluno:
+        aluno.nome = input("digite seu nome: ")
+        aluno.sobrenome = input("digite seu sobrenome: ")
+        aluno.email = input("digite seu e-mail: ")
+        aluno.senha = input("digite sua senha: ")
+
+        session.commit()
+    else:
+        print("cliente não encontrado")
+
 os.system("cls || clear")
 
 while True:
@@ -70,21 +86,7 @@ while True:
 
 
 # u - update - update - atualizar
-def atualizar():
-    print("\natualizando dados do usuário")
-    email_aluno = input("digite o e-mail do aluno que será atualizado: ")
 
-    aluno = session.query(Aluno).filter_by(email = email_aluno).first()
-
-    if aluno:
-        aluno.nome = input("digite seu nome: ")
-        aluno.sobrenome = input("digite seu sobrenome: ")
-        aluno.email = input("digite seu e-mail: ")
-        aluno.senha = input("digite sua senha: ")
-
-        session.commit()
-    else:
-        print("cliente não encontrado")
 
 # d - delete - delete - excluir
 def excluir():
